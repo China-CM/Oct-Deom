@@ -88,6 +88,7 @@ export default {
           if(this.cls=='car'){
               this.cls='car donghua'
           }
+          _hmt.push(['_trackEvent','汽车报价','tap','品牌点击'])
       },
       closestart(e){
           let startx=e.changedTouches[0].pageX;
