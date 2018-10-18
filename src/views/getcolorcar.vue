@@ -1,14 +1,14 @@
 <template>
         <div class="color">
-            <p data-hover="hover">全部颜色</p> 
+            <p data-hover="hover" @click="allcolorcar">全部颜色</p> 
             <div>
                 <p class="c-type">
-                    <span :class="index==0?'active':''" v-for="(item,index) in getcoloryears" :key='index' :data-txt='item' @click="clickyear">
+                    <span :class="years==index?'active':''" v-for="(item,index) in Object.keys(alldata).reverse()" :key='index' :data-index='index' @click="clickyear">
                         {{item}}
                     </span>
                 </p> 
                 <ul>
-                    <li :data-id="item.ColorId" v-for="(item,index) in getcolor" :key='index' data-hover="hover">
+                    <li :data-id="item.ColorId" v-for="(item,index) in Object.values(alldata).reverse()[years]" :key='index' data-hover="hover">
                         <span :style='`background-color:${item.Value}`'></span>
                         {{item.Name}}
                     </li>
@@ -27,32 +27,34 @@
 <script>
 import {mapState,mapActions} from 'vuex';
 export default {
+    data(){
+        return{
+            years:0
+        }
+    },
     computed:{
         ...mapState({
-            getcoloryears:(state)=>{
-                return state.getcolordata.years
-            },
-            getcolor:(state)=>{
-                console.log(state.getcolordata.colordata)
-                return state.getcolordata.colordata
+            alldata:(state)=>{
+                return state.getcolordata.alldata
             }
         })
     },
     methods:{
         ...mapActions({
-            requestcolordata:'getcolordata/requestcolordata',
-            getcolordata:'getcolordata/getcolordata'
+            requestcolordata:'getcolordata/requestcolordata'
         }),
         clickyear(e){
-            // console.log(e.target.dataset.txt)
-            this.getcolordata(e.target.dataset.txt)
+            // console.log(e.target.dataset.index)
+            this.years=e.target.dataset.index
+            
+        },
+        //回退所有颜色
+        allcolorcar(){
+            this.$router.back(-1)
         }
     },
     mounted(){
         this.requestcolordata(this.$route.query.SerialID)
-    },
-    updated(){
-        // this.getcolordata(this.getcoloryears[0])
     }
 }
 </script>
@@ -102,6 +104,8 @@ export default {
     font-size: .3rem;
     line-height: .76rem;
     height: .76rem;
+    display: flex;
+    flex-wrap: nowrap;
     background: #fff;
     overflow-x: scroll;
     -webkit-overflow-scrolling: touch;

@@ -1,9 +1,9 @@
 <template>
     <div class="detailbox" @scroll="scroll">
         <div class="detailimg" ref="detailbox">
-            <!-- <div v-for="(item,index) in imgpagedata" :key='index'>
+            <div v-for="(item,index) in imgpagedata" :key='index' @click="swiperimg">
                 <img :src='item.Url.slice(0,item.Url.length-7)+item.HighSize+".jpg"'/>
-            </div> -->
+            </div>
         </div>
     </div>
 </template>
@@ -31,6 +31,9 @@ export default {
                     ImageID:this.ImageID
                 })
             }
+        },
+        swiperimg(){
+            
         }
     },
     mounted(){

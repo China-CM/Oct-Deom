@@ -29,7 +29,6 @@ export let getimgdata=(ids)=>{
     return sendRequest(`/v2-car-getImageList.html?SerialID=${ids}`)
 }
 export let getimgdetail=(param)=>{
-    console.log(param)
     let search=``;
     for(let i in param){
         search+=`&${i}=${param[i]}`;

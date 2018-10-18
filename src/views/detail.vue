@@ -8,7 +8,7 @@
                 <p style="color:red;font-size:.34rem">{{detaildata.market_attribute&&detaildata.market_attribute.dealer_price}}</p>
                 <p style="color:#ccc;font-size:.28rem">指导价{{detaildata.market_attribute&&detaildata.market_attribute.official_refer_price}}</p>
             </div>
-            <button @click='ToLowPricePage'>{{detaildata.BottomEntranceTitle}}</button>
+            <button style="background:red">{{detaildata.BottomEntranceTitle}}</button>
         </div>
         <div class="lists">
             <div class="tab">
@@ -21,7 +21,7 @@
                         <p>{{v.market_attribute.year}} {{v.car_name}}</p>
                         <p>{{v.horse_power}}马力{{v.gear_num}}档</p>
                         <p><span>指导价{{v.market_attribute.official_refer_price}}<span>{{v.market_attribute.dealer_price_min}}起</span></span></p>
-                        <div class="btn" :data-routes="v.car_id">询问低价</div>
+                        <div class="btn" @click='ToLowPricePage(detaildata.list[0].car_id)' :data-routes="v.car_id">询问低价</div>
                     </div>
                 </div>
             </div>
@@ -38,6 +38,7 @@ export default {
                 return state.shouye.yearsdata;
             },
             detaildata:(state)=>{
+                console.log(state.shouye.detaildata)
                 return state.shouye.detaildata;
             },
             tablist:(state)=>{
@@ -52,11 +53,12 @@ export default {
         clicks(year){
             this.$store.dispatch('shouye/getyear',year)
         },
-        ToLowPricePage(){
+        ToLowPricePage(id){
+            console.log(id)
             this.$router.push({
                 path:"/toalowprice",
                 query:{
-                    carId:"126282"
+                    carId:id
                 }
             })
         },

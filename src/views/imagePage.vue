@@ -20,7 +20,6 @@
             <swiper :options='swiperOption' class="swiperbox" ref="mySwiper">
                 <swiper-slide v-for="(item,index) in imgdetailtwo" :key='index'>
                     <img :data-src='item.Url.slice(0,item.Url.length-7)+item.LowSize+".jpg"' class="swiper-lazy"/>
-                    
                     <div class="swiper-lazy-preloader"></div>
                 </swiper-slide>
             </swiper>
@@ -52,6 +51,7 @@ export default {
                 return state.imgpage.imgpagedata
             },
             imgdetailtwo:(state)=>{
+                // console.log(state.imgdetail.imgdetailtwo)
                 return state.imgdetail.imgdetailtwo
             },
             // imgpagedetaildata:(state)=>{
@@ -64,18 +64,19 @@ export default {
                     on:{
                         slideChange:function(){
                             // console.log(this.activeIndex,that.imgpagedetaildata.length-3)
-                            if(this.activeIndex>that.imgdetailtwo.length-3){
-                                console.log(that.ImageID,'这里哟')
-                                that.getimgdataTwo({
-                                    SerialID:that.$route.query.ids,
-                                    ImageID:6
-                                })
-                            }
+                            // if(this.activeIndex>that.imgdetailtwo.length-3){
+                            //     console.log(that.ImageID,'这里哟')
+                            //     that.getimgdataTwo({
+                            //         SerialID:that.$route.query.ids,
+                            //         ImageID:6
+                            //     })
+                            // }
                             // console.log(this.activeIndex);
                             that.numindex=this.activeIndex
                         }
                     }
                     ,
+                    observer:true,
                     lazy: {
                         loadPrevNext: true
                     }
@@ -105,7 +106,7 @@ export default {
             this.ImageID=ids;
         },
         swiperbanner(i,ids){
-            console.log(ids,'这里')
+            // console.log(ids,'这里')
             if(i!=0){
                 this.swipershow=true;
                 this.getimgdataTwo({

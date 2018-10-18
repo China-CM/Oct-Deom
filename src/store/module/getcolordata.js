@@ -12,11 +12,8 @@ const mutations={
         state.alldata=payload.data;
         state.years=Object.keys(payload.data).reverse();
         // state.colordata=payload.data['2017']
-        // console.log(state.colordata)
+        console.log(state.alldata)
         // state.years=payload.data
-    },
-    getcolor(state,payload){
-        state.colordata=state.alldata[payload];
     }
 }
 const actions={
@@ -24,9 +21,6 @@ const actions={
         getcolordata(ids).then(res=>{
             commit('getcolordata',res)
         })
-    },
-    getcolordata({commit},txt){
-        commit("getcolor",txt)
     }
 }
 export default{

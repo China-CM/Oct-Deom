@@ -21,11 +21,8 @@ const mutations={//同步
         state.isFetching=true;
     },
     getimgdataTwo(state,payload){
-        let arr=[];
-        // console.log(payload.List)
-        arr.push(...payload.List);
-        console.log(arr,'arr')
-        state.imgdetailtwo=arr;
+        state.imgdetailtwo=payload.List;
+        // console.log(state.imgdetailtwo)
     }
 }
 const actions={//异步
@@ -43,32 +40,12 @@ const actions={//异步
     },
     getimgdataTwo({commit,state},obj){
         if(obj.ImageID != state.imgid){
-            // console.log(1)
             state.imgid = obj.ImageID
-            state.imgdetailtwo=[];
-            obj.Page=state.Page;
-            if(state.isFetching){
-                return;
-            }
-            commit('startFetching');
             getimgdetail(obj).then(res=>{
-                console.log(res);
-                commit('getimgdataTwo',res.data);
-            })
-        }else if(obj.ImageID==state.imgid){
-            obj.Page=state.Page++;
-            console.log(obj.Page)
-            if(state.isFetching){
-                return;
-            }
-            commit('startFetching');
-            getimgdetail(obj).then(res=>{
-                // console.log(res);
+                console.log(res.data)
                 commit('getimgdataTwo',res.data);
             })
         }
-        
-        // console.log(obj)
     }
 }
 export default {
