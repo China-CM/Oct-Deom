@@ -1,4 +1,4 @@
-const host = !/localhost/.test(window.location.host)?'http://baojia-test.chelun.com':'https://baojia.chelun.com';
+const host = /localhost/.test(window.location.host)?'http://baojia-test.chelun.com':'https://baojia.chelun.com';
 function sendRequest(url, method = 'GET', data = {}){
     let params = {
         method
