@@ -8,11 +8,11 @@
                 <p style="color:red;font-size:.34rem">{{detaildata.market_attribute&&detaildata.market_attribute.dealer_price}}</p>
                 <p style="color:#ccc;font-size:.28rem">指导价{{detaildata.market_attribute&&detaildata.market_attribute.official_refer_price}}</p>
             </div>
-            <button style="background:red">{{detaildata.BottomEntranceTitle}}</button>
+            <button style="background-color:#00afff;color:#fff">{{detaildata.BottomEntranceTitle}}</button>
         </div>
         <div class="lists">
             <div class="tab">
-                <span v-for="(item,index) in yearsdata" :key="index"  @click='clicks(item)'>{{item}}</span>
+                <span :class="ids==index?'tabActive':''" v-for="(item,index) in yearsdata" :key="index"  @click='clicks(item,index)'>{{item}}</span>
             </div>
             <div class="tablist">
                 <div class='listdata' v-for="(val,key,index) in tablist" :key="index">
@@ -21,7 +21,7 @@
                         <p>{{v.market_attribute.year}} {{v.car_name}}</p>
                         <p>{{v.horse_power}}马力{{v.gear_num}}档</p>
                         <p><span>指导价{{v.market_attribute.official_refer_price}}<span>{{v.market_attribute.dealer_price_min}}起</span></span></p>
-                        <div class="btn" @click='ToLowPricePage(detaildata.list[0].car_id)' :data-routes="v.car_id">询问低价</div>
+                        <div class="btn" @click='ToLowPricePage(detaildata.list[0].car_id)' :data-routes="v.car_id"  style="background:#fff;color:#00afff">询问低价</div>
                     </div>
                 </div>
             </div>
@@ -32,13 +32,18 @@
 import {mergedata,sortdata,filterdata} from '../utils/tablist'
 import {mapState,mapActions} from 'vuex'
 export default {
+    data(){
+        return{
+            ids:0
+        }
+    },
     computed:{
         ...mapState({
             yearsdata:(state)=>{
                 return state.shouye.yearsdata;
             },
             detaildata:(state)=>{
-                console.log(state.shouye.detaildata)
+                // console.log(state.shouye.detaildata)
                 return state.shouye.detaildata;
             },
             tablist:(state)=>{
@@ -50,11 +55,11 @@ export default {
         ...mapActions({
            godetail:'shouye/godetail'
         }),
-        clicks(year){
+        clicks(year,index){
             this.$store.dispatch('shouye/getyear',year)
+            this.ids=index;
         },
         ToLowPricePage(id){
-            console.log(id)
             this.$router.push({
                 path:"/toalowprice",
                 query:{
@@ -75,6 +80,7 @@ export default {
         
     },
     mounted(){
+        window.sessionStorage.clear();
         this.godetail(this.$route.query.SerialID)
     },
     updated(){
@@ -87,6 +93,10 @@ export default {
 .blue{
     color: blue
 }
+.tabActive{
+    color: red
+}
+
 .detailbox{
     width: 100%;
     height: 100%;
@@ -113,9 +123,9 @@ export default {
 }
 .askPrice button{
     padding: .15rem 1.2rem;
-    color: #fff;
+    color: #000;
     border: none;
-    background: skyblue;
+    background: #fff;
     border-radius: 5px
 }
 .lists{
@@ -147,6 +157,7 @@ export default {
 .listbox{
     width: 100%;
     background: #fff;
+    border-bottom: 1px solid #ccc;
 }
 .listbox p{
     padding: .1rem .1rem;

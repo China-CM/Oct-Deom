@@ -65,7 +65,6 @@ export default {
       starts(index){
         this.fixedTop=this.$refs.fixed.getBoundingClientRect().top;
         this.divheight=this.$refs.fixed.children[0].getBoundingClientRect().height;
-        
         // this.wraps.scrollToElement(this.$refs.val[index],100,true,0,0)
       },
       moves(e){
@@ -80,7 +79,7 @@ export default {
         // console.log(letter)
         wrap.scrollTop=letter
       },
-      touchends(index){
+      touchends(){
 
       },
       cardiv(index){

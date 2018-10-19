@@ -25,9 +25,21 @@ export let getdetailList = (id)=>{
 export let getlowpricedata = (obj) =>{
     return sendRequest(`/v2-dealer-alllist.html?carId=${obj.carId}&cityId=${obj.cityId}&_1539312444103`)
 }
-export let getimgdata=(ids)=>{
-    return sendRequest(`/v2-car-getImageList.html?SerialID=${ids}`)
+export let getimgdata=(obj)=>{
+    // console.log(obj,'adjaldjwkldkladjakldjaskldjaskldjskaldsjklajkl')
+    if(obj.ColorID){
+        return sendRequest(`/v2-car-getImageList.html?SerialID=${obj.SerialID}&ColorID=${obj.ColorID}`)
+    }else if(obj.CarID){
+        return sendRequest(`/v2-car-getImageList.html?SerialID=${obj.SerialID}&CarID=${obj.CarID}`)
+    }else{
+        return sendRequest(`/v2-car-getImageList.html?SerialID=${obj.SerialID}`)
+    }
 }
+// https://baojia.chelun.com/v2-car-getImageList.html?SerialID=2593&_1539862562888
+// https://baojia.chelun.com/v2-car-getImageList.html?SerialID=2593&ColorID=23110&_1539862084753
+// https://baojia.chelun.com/v2-car-getImageList.html?SerialID=2593&_1539865006378
+// https://baojia.chelun.com/v2-car-getImageList.html?SerialID=2593&CarID=126282&_1539865648400
+
 export let getimgdetail=(param)=>{
     let search=``;
     for(let i in param){
@@ -59,4 +71,5 @@ export let getcolordata=(ids)=>{
 }
 // https://baojia.chelun.com/v2-car-getModelImageYearColor.html?SerialID=2593&_1539700937076
 
-
+// http://baojia-test.chelun.com/v2-car-getImageList.html?SerialID=2593&_=1539874783536
+// https://baojia.chelun.com/v2-car-getImageList.html?SerialID=2593&_=1539874835211

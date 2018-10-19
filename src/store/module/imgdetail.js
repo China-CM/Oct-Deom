@@ -42,7 +42,7 @@ const actions={//异步
         if(obj.ImageID != state.imgid){
             state.imgid = obj.ImageID
             getimgdetail(obj).then(res=>{
-                console.log(res.data)
+                // console.log(res.data)
                 commit('getimgdataTwo',res.data);
             })
         }

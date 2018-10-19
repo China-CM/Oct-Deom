@@ -1,6 +1,6 @@
 <template>
         <div class="color">
-            <p data-hover="hover" @click="allcolorcar">全部颜色</p> 
+            <p data-hover="hover" @click="allcolorcar" data-val='全部颜色'>全部颜色</p> 
             <div>
                 <p class="c-type">
                     <span :class="years==index?'active':''" v-for="(item,index) in Object.keys(alldata).reverse()" :key='index' :data-index='index' @click="clickyear">
@@ -8,18 +8,10 @@
                     </span>
                 </p> 
                 <ul>
-                    <li :data-id="item.ColorId" v-for="(item,index) in Object.values(alldata).reverse()[years]" :key='index' data-hover="hover">
+                    <li :data-id="item.ColorId" @click='colorgo' :data-val='item.Name' v-for="(item,index) in Object.values(alldata).reverse()[years]" :key='index' data-hover="hover">
                         <span :style='`background-color:${item.Value}`'></span>
                         {{item.Name}}
                     </li>
-                    <!-- <li index="0" data-id="23110" data-hover="hover">
-                        <span style="background-color: rgb(87, 27, 54);"></span>
-                        阿格斯棕
-                    </li>
-                    <li index="1" data-id="4219" data-hover="hover">
-                        <span style="background-color: rgb(248, 247, 243);"></span>
-                        朱鹭白
-                    </li> -->
                 </ul>
             </div>
         </div>
@@ -35,13 +27,15 @@ export default {
     computed:{
         ...mapState({
             alldata:(state)=>{
+                console.log(state.getcolordata.alldata,'dadadada')
                 return state.getcolordata.alldata
             }
         })
     },
     methods:{
         ...mapActions({
-            requestcolordata:'getcolordata/requestcolordata'
+            requestcolordata:'getcolordata/requestcolordata',
+            imgpage:'imgpage/imgpage'
         }),
         clickyear(e){
             // console.log(e.target.dataset.index)
@@ -49,11 +43,20 @@ export default {
             
         },
         //回退所有颜色
-        allcolorcar(){
+        allcolorcar(e){
+            window.sessionStorage.setItem('carcolor',JSON.stringify({SerialID:this.$route.query.SerialID,tit:e.target.dataset.val}))
             this.$router.back(-1)
+        },
+        //选择颜色查看车款
+        colorgo(e){
+            // console.log(e.target.dataset.id)
+            // console.log(this.$route.query);
+            window.sessionStorage.setItem('carcolor',JSON.stringify({SerialID:this.$route.query.SerialID,ColorID:e.target.dataset.id,tit:e.currentTarget.dataset.val}))
+            this.$router.go(-1)
         }
     },
     mounted(){
+        window.sessionStorage.removeItem('cartype')
         this.requestcolordata(this.$route.query.SerialID)
     }
 }

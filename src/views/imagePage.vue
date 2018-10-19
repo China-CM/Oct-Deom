@@ -2,8 +2,8 @@
     <div class="imgbox">
         <div class="imgpagebox">
             <div class="imgpageboxtop">
-                <p @click='getcolor'>颜色</p>
-                <p>车款</p>
+                <p @click='getcolor'>{{txt}}</p>
+                <p @click="gettype">{{cartxt}}</p>
             </div>
             <div class="imgpagescroll">
                 <div class="imgpagebottom">
@@ -41,13 +41,15 @@ export default {
             ImageID:0,
             swipershow:false,
             newimgdataarr:[],
-            numindex:0
+            numindex:0,
+            txt:'颜色',
+            cartxt:'车款'
         }
     },
     computed:{
         ...mapState({
             imgpagedata:(state)=>{
-                // console.log(state.imgpage.imgpagedata)
+                console.log(state.imgpage.imgpagedata,'imgimgimgimg')
                 return state.imgpage.imgpagedata
             },
             imgdetailtwo:(state)=>{
@@ -98,7 +100,6 @@ export default {
             getimgdataTwo:'imgdetail/getimgdataTwo'
         }),
         goimgdetail(index,ids){
-            // console.log()
             if(index=='0'){
                 this.flag=true
             }
@@ -106,7 +107,6 @@ export default {
             this.ImageID=ids;
         },
         swiperbanner(i,ids){
-            // console.log(ids,'这里')
             if(i!=0){
                 this.swipershow=true;
                 this.getimgdataTwo({
@@ -128,10 +128,33 @@ export default {
                     SerialID:this.$route.query.ids
                 }
             })
+        },
+        gettype(){
+            this.$router.push({
+                path:"/gettype",
+                query:{
+                    SerialID:this.$route.query.ids
+                }
+            })
         }
     },
     mounted(){
-        this.imgpage(this.$route.query.ids);
+        let sessionStoragecarcolor=window.sessionStorage.getItem('carcolor');
+        let sessionStoragecartype=window.sessionStorage.getItem('cartype');
+        if(sessionStoragecarcolor){
+            this.txt=JSON.parse(sessionStoragecarcolor).tit
+        }
+        if(sessionStoragecartype){
+            this.cartxt=JSON.parse(sessionStoragecartype).tit
+        }
+        if(sessionStoragecarcolor){
+            this.imgpage(JSON.parse(sessionStoragecarcolor))
+        }else if(sessionStoragecartype){
+            this.imgpage(JSON.parse(sessionStoragecartype))
+        }else{
+            this.imgpage({SerialID:this.$route.query.ids});
+        }
+        
         // new swiper('.swiperbox',{
         //     on:{
         //         slideChange:()=>{
@@ -171,6 +194,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: .24rem;
 }
 .imgpagescroll{
     width: 100%;
@@ -235,5 +259,17 @@ touch-action: none;
 }
 .swiper-container{
     height: 4rem;
+}
+.imgpageboxtop>p:after {
+    content: "";
+    display: inline-block;
+    padding-top: .16rem;
+    padding-right: .16rem;
+    border-top: 2px solid #ccc;
+    border-right: 2px solid #ccc;
+    -webkit-transform: rotate(135deg);
+    transform: rotate(135deg);
+    margin-left: .2rem;
+    vertical-align: 5%;
 }
 </style>

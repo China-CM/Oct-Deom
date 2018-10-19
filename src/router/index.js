@@ -6,6 +6,7 @@ let detail=()=>import('@/views/detail')
 let toalowprice=()=>import('@/views/toalowprice')
 let imagepage=()=>import('@/views/imagepage')
 let getcolorcar=()=>import('@/views/getcolorcar');
+let gettype=()=>import('@/views/gettype');
 Vue.use(VueRouter)
 
 let router= new VueRouter({
@@ -29,6 +30,10 @@ let router= new VueRouter({
             path:'/getcolorcar',
             name:getcolorcar,
             component:getcolorcar
+        },{
+            path:'/gettype',
+            name:gettype,
+            component:gettype
         },{
             path:"*",
             redirect:'/Index'

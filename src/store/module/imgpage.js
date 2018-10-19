@@ -13,8 +13,10 @@ const mutations={//同步
     }
 }
 const actions={//异步
-    imgpage({commit},ids){
-        getimgdata(ids).then(res=>{
+    imgpage({commit},obj){
+        console.log(obj,'objobjobj')
+        getimgdata(obj).then(res=>{
+            // console.log(res,'resres')
             commit('imgpagedata',res)
         })
     }

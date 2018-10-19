@@ -6,7 +6,7 @@ import shouye from './module/shouye.js';
 import imgpage from './module/imgpage';
 import imgdetail from './module/imgdetail';
 import citypage from './module/citypage';
-import getcolordata from './module/getcolordata'
+import getcolordata from './module/getcolordata';
 Vue.use(Vuex);
 export default new Vuex.Store({
     state:{
