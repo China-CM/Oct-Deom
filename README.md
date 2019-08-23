@@ -1,6 +1,5 @@
-# 10.8chelun
+# chelun/Replica
 
-# 我爱学习天天向上
 
 > A Vue.js project
 
